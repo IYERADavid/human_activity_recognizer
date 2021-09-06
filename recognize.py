@@ -99,26 +99,27 @@ if build_model_first:
       model.fit(X_train, y_train)
       scores.append(model.score(X_test, y_test))
   get_model_accuracies()
-  # my observered model accuracy was 43.583 %
+  # my observered model accuracy was 45.9 %
   print("model accuracy is : " + str(np.mean(scores) * 100))
   # save the model for future use
-  filename = 'finalized_model.sav'
+  filename = 'constructed_mlp_model.sav'
   pickle.dump(mlp, open(filename, 'wb'))
 
 
-
-filename = 'finalized_model.sav'
+filename = 'constructed_mlp_model.sav'
 mlp = pickle.load(open(filename, 'rb'))
 
 def predict_on_live_video():
   # define a video capture object
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture("/home/david/human-recognition-testing/videoplayback.mp4")
     
   if (cap.isOpened()== False):
     print("Error opening video stream")
   
   prediction_list = []
-  current_prediction = None
+  current_prediction = "Recognizing activity"
+  green = 0
+  red = 255
 
   while(cap.isOpened()):
         
@@ -149,18 +150,27 @@ def predict_on_live_video():
           predicted_labels_prob_np = np.array(prediction_list)
           # Calculating Average of Predicted Labels Probabilities Column Wise
           predicted_labels_prob_averaged =predicted_labels_prob_np.mean(axis=0)
-          # Converting the predicted probabilities into labels by returning the index of
-          # the maximum value.
-          predicted_label = np.argmax(predicted_labels_prob_averaged)
-          predicted_class_name = classes_list[predicted_label]
-          current_prediction = predicted_class_name 
+          # check if the high plobabilty if is greater than 74 to make ure that we
+          # return correct prediction most of the time
+          maximum_label = np.max(predicted_labels_prob_averaged) * 100
+          print(maximum_label)
+          if maximum_label >= 75:
+            # Converting the predicted probabilities into labels by returning the 
+            # index of the maximum value.
+            predicted_label = np.argmax(predicted_labels_prob_averaged)
+            predicted_class_name = classes_list[predicted_label]
+            current_prediction = predicted_class_name
+            green = 255
+            red = 0
+          else:
+            current_prediction = "Recognizing activity"
+            green = 0
+            red = 255 
           prediction_list.clear()
-
-        if current_prediction:
-            cv2.putText(
-            frame, current_prediction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
-            1, (0, 0, 255), 2)
-
+        cv2.putText(
+          frame, current_prediction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+          1, (0, green, red), 2
+        )
         cv2.imshow('frame', frame)
         # the 'q' button is set as the
         # quitting button you may use any
