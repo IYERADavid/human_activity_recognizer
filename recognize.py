@@ -16,7 +16,7 @@ random.seed(seed_constant)
 image_height, image_width = 32, 32 
 max_images_per_class = 600
 
-dataset_directory = "archive/Activity_Dataset"
+dataset_directory = "Dataset/Activity_Dataset"
 classes_list = ["Control", "Sitting", "Sleeping", "Stairs", "Standing", "Walking"]
 # the number of frame we will take in order to make prediction
 n_frame = 16
