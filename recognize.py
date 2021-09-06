@@ -19,7 +19,7 @@ max_images_per_class = 600
 dataset_directory = "Dataset/Activity_Dataset"
 classes_list = ["Control", "Sitting", "Sleeping", "Stairs", "Standing", "Walking"]
 # the number of frame we will take in order to make prediction
-n_frame = 16
+n_frame = 10
 
 ''' 
 This if statement which execute the  folling if build_madel_first is  true helps us to not waste
@@ -111,7 +111,7 @@ mlp = pickle.load(open(filename, 'rb'))
 
 def predict_on_live_video():
   # define a video capture object
-  cap = cv2.VideoCapture("/home/david/human-recognition-testing/videoplayback.mp4")
+  cap = cv2.VideoCapture(0)
     
   if (cap.isOpened()== False):
     print("Error opening video stream")
@@ -122,7 +122,7 @@ def predict_on_live_video():
   red = 255
 
   while(cap.isOpened()):
-        
+
       # Capture the video frame
       # by frame
       ret, frame = cap.read()
