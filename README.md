@@ -5,10 +5,10 @@ The codes here does not hava dataset folder because it is large but you can find
 https://www.kaggle.com/jithinnambiarj/human-activity-detection-dataset/tasks?taskId=4068
 
 and after downloaidng it we combined the content of acitvity dataset and activity vaidation
-in our folder called Activity_Dataset because we make the traning and test set our selves not as
+in our folder called Activity_Dataset because we make the traning and testing set our selves not as
 the code is downloaded like.
 
-the toturial followed writing recognize.py was from here
+the toturial followed writing codes for recognize.py was from here
 
 https://learnopencv.com/introduction-to-video-classification-and-human-activity-recognition/
 
